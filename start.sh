@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # Copy gitlab.rb for the first time
-echo "Installing gitlab.rb config..."
-sed -i '/^external_url/d' /opt/gitlab/etc/gitlab.rb.template
-sed -i '$a external_url "http://'$DOMAIN'/gitlab"' /opt/gitlab/etc/gitlab.rb.template
-cp /opt/gitlab/etc/gitlab.rb.template /etc/gitlab/gitlab.rb
-chmod 0600 /etc/gitlab/gitlab.rb
+if [[ ! -e /etc/gitlab/gitlab.rb ]]; then
+        echo "Installing gitlab.rb config..."
+        cp /opt/gitlab/etc/gitlab.rb.template /etc/gitlab/gitlab.rb
+        chmod 0600 /etc/gitlab/gitlab.rb
+fi
+
+sed -i '/^external_url/s|external_url.*|external_url "http://'$DOMAIN'/gitlab" |g' /etc/gitlab/gitlab.rb
 
 # Start service manager
 echo "Starting services..."
