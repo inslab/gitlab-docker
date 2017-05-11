@@ -29,6 +29,9 @@ VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
 EXPOSE 443 80 22
 
 ENV DOMAIN localhost
+# ENV LDAP_HOST
+# ENV LDAP_PORT
+# ENV LDAP_BASE_DN
 
 # Setup the Docker container environment and run Gitlab
 WORKDIR /opt/gitlab
